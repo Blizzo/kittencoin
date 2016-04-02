@@ -17,6 +17,9 @@ function check_user($conn, $username){
 }
 
 //fix this so it returns multiple results
+//TODO: use prepared statement here to prevent SQL injection
+//TODO: use kc-search for this database call, although that would happen from
+//the calling function, not here.
 function lookup_user($conn, $id){
     if(is_numeric($id))
         $sql = "SELECT id, name FROM users WHERE `id` = $id";
