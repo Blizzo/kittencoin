@@ -17,20 +17,33 @@ function check_user($conn, $username){
 }
 
 //fix this so it returns multiple results
-//TODO: use prepared statement here to prevent SQL injection
+//TODO: test this
 //TODO: use kc-search for this database call, although that would happen from
 //the calling function, not here.
 function lookup_user($conn, $id){
     if(is_numeric($id))
-        $sql = "SELECT id, name FROM users WHERE `id` = $id";
+    {
+        #$sql = "SELECT id, name FROM users WHERE `id` = $id";
+        $statement = $conn->prepare("SELECT id, name FROM users WHERE `id` = ?");
+	$statement->bind_param("i", $id);
+    }
     else
-        $sql = "SELECT id, name FROM users WHERE name = '".$id."'";
+    {
+        #$sql = "SELECT id, name FROM users WHERE name = '".$id."'";
+        $statement = $conn->prepare("SELECT id, name FROM users WHERE name = ?");
+	$statement->bind_param("s", $id);
+    }
 
-    $query = $conn->query($sql);
+    $statement->execute();
+    $result = $statement->get_result();
+    #$query = $conn->query($sql);
     $result['errors'] = "";
-    if($conn->error)
-        $result['error'] = $sql."<br>".$conn->error;
-    elseif($query->num_rows == 0){
+    if($statement->error)
+    {
+        #$result['error'] = $sql."<br>".$conn->error;
+        $result['error'] = "There was a problem with your search criteria";
+    }
+    elseif($result->num_rows == 0){
         if (isset($result['error']))
             $result['error'] = $result['error']."<br>No user found";
         else
@@ -38,6 +51,7 @@ function lookup_user($conn, $id){
     }
     else
 	{
+		$query = $result;
 		$result = array();
 		$row = $query->fetch_assoc();
 		while($row != NULL)
