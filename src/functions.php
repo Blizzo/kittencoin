@@ -224,7 +224,7 @@ function check_errors(){
             <div class="small-4 columns"><p></p> </div>
             <div class="small-4 columns text-center error_msg">
             <span class="error_msg">';
-                echo urldecode($_GET['error']);
+            echo htmlentities(urldecode($_GET['error']));
             echo '</span>
             </div>
             <div class="small-4 columns"><p></p> </div>
