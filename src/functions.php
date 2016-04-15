@@ -35,7 +35,7 @@ function lookup_user($conn, $id){
     }
 
     $statement->execute();
-    $result = $statement->get_result();
+    $query = $statement->get_result();
     #$query = $conn->query($sql);
     $result['errors'] = "";
     if($statement->error)
@@ -43,7 +43,7 @@ function lookup_user($conn, $id){
         #$result['error'] = $sql."<br>".$conn->error;
         $result['error'] = "There was a problem with your search criteria";
     }
-    elseif($result->num_rows == 0){
+    elseif($query->num_rows == 0){
         if (isset($result['error']))
             $result['error'] = $result['error']."<br>No user found";
         else
@@ -51,7 +51,7 @@ function lookup_user($conn, $id){
     }
     else
 	{
-		$query = $result;
+		#$query = $result;
 		$result = array();
 		$row = $query->fetch_assoc();
 		while($row != NULL)
