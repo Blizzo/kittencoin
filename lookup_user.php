@@ -30,13 +30,8 @@ check_errors();
             echo "<div class='error_msg welcome'>".$lookup['error']."</div>";
         }
         else{
-			foreach ($lookup as $row)
-			{
-				foreach ($row as $user => $value)
-				    echo "<strong>$user</strong>: $value<br>";
-
-				echo "<br>";
-			}
+			foreach ($lookup as $user => $value)
+			    echo "<strong>$user</strong>: $value<br>";
 
 			echo "<br>";
         }

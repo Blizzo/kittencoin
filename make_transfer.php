@@ -26,8 +26,14 @@ if (!$error){
     $comment = $_POST['comment'];
     $users_total = get_total($conn, $from);
     $error = False;
+	#$error = "post var is " . $_POST['to'];
+
+	#header('Location: /transfer.php?error='.urlencode($error));
+	#die();
     
     $to_user = lookup_user($conn, $_POST['to']);
+	#print_r($to_user);
+	#die();
     if(isset($to_user['error'])){
         $error = $to_user['error'];
     }
@@ -48,8 +54,15 @@ if (!$error){
     if ($to == $from ) {
         $error = "You can't transer to yourself!";
     }
+	#$error = "to_user is " . $_POST['to'];
+    #echo $to;
+    #echo $from;
+	#echo $amount;
+	#echo $comment;
     if (!$error) {
-        
+ 
+
+     
         $transfer = transfer($conn, $to, $from, $amount, $comment);
         if(is_bool($transfer)){
             header('Location: /');

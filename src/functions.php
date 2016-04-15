@@ -1,7 +1,7 @@
 <?php 
 
 function connect_to_db(){
-    return new mysqli("localhost", "kittencoin", "password","KittenCoin");
+	return new mysqli("localhost", "kittencoin", "KittyPasswordy0", "KittenCoin");
 }
 
 function check_user($conn, $username){
@@ -16,22 +16,18 @@ function check_user($conn, $username){
         return False;
 }
 
-//fix this so it returns multiple results
-//TODO: test this
-//TODO: use kc-search for this database call, although that would happen from
-//the calling function, not here.
 function lookup_user($conn, $id){
     if(is_numeric($id))
     {
         #$sql = "SELECT id, name FROM users WHERE `id` = $id";
         $statement = $conn->prepare("SELECT id, name FROM users WHERE `id` = ?");
-	$statement->bind_param("i", $id);
+		$statement->bind_param("i", $id);
     }
     else
     {
         #$sql = "SELECT id, name FROM users WHERE name = '".$id."'";
         $statement = $conn->prepare("SELECT id, name FROM users WHERE name = ?");
-	$statement->bind_param("s", $id);
+		$statement->bind_param("s", $id);
     }
 
     $statement->execute();
@@ -50,28 +46,7 @@ function lookup_user($conn, $id){
             $result['error'] = "No user found";
     }
     else
-	{
-		#$query = $result;
-		$result = array();
-		$row = $query->fetch_assoc();
-		while($row != NULL)
-		{
-			array_push($result, $row);
-			$row = $query->fetch_assoc();
-		}
-		//$result = $query->fetch_all();
-		//$result = $query->fetch_assoc();
-		//print_r($result);
-		#foreach($result as $row)
-		#{
-		#	foreach($row as $value => $key)
-		#		echo "$value - $key";
-		#}
-		//$result = array();
-		//$rows = $query->fetch_assoc();
-		//foreach($rows as $row)
-		//	array_push($result, $row);
-    }
+		$result = $query->fetch_assoc();
 
     return $result;
 }
@@ -170,7 +145,8 @@ function transfer($conn, $to, $from, $amount, $comment){
 	$comment = htmlentities($comment);
 
     # Create new transaction
-    $create_sql = "INSERT INTO transfers (`transfer_to`,`transfer_from`, `amount`, `comment`) VALUES ( $to, $from, $amount,'".$comment."')";
+    	
+	$create_sql = "INSERT INTO transfers (`transfer_to`,`transfer_from`, `amount`, `comment`) VALUES ( $to, $from, $amount,'".$comment."')";
 	$create_stmt = $conn->prepare("INSERT INTO transfers (transfer_to, transfer_from, amount, comment) VALUES (?, ?, ?, ?)");
 	$create_stmt->bind_param("ssis", $to, $from, $amount, $comment);
 
