@@ -61,7 +61,7 @@ function register_user($conn, $username, $password, $admin = 0){
 	$statement->execute();
 
     if($statement->error)
-        $result = $statement->error."<br>".$sql;
+        $result = "There was a problem registering.";
     else
         $result = $statement->insert_id;
     return $result;
@@ -112,9 +112,8 @@ function login_user($conn, $username, $ptpass){
 	$query = $statement->get_result();
     $error = $statement->error;
 
-    if($error){
-        $result = $error;
-        return $result;
+    if($statement->error){
+    	return "Username/password combination is bad.";
     }
 
     if ($query->num_rows > 0) {
@@ -194,7 +193,7 @@ function get_transfers($conn, $id){
     $sql = "SELECT * FROM transfers WHERE `transfer_to` = $id OR `transfer_from` = $id";
     $query = $conn->query($sql);
     if ($conn->error) {
-        $result = $conn->error;
+        $result = "Retrieving transfers has failed.";
     }
     else{
         while ($data = $query->fetch_array(MYSQLI_ASSOC)){
@@ -209,7 +208,7 @@ function get_info($conn, $id){
     $query = $conn->query($sql);
     $error = $conn->error;
     if($error){
-        $result['error'] = $error;
+        $result['error'] = "There's been an error gathering information about the user.";
         return $result;
     }
     $result = $query->fetch_array(MYSQLI_ASSOC);
