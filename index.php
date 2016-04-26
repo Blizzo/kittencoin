@@ -16,9 +16,9 @@ if (isset($user['error'])) {
     die();
 }
 
-$title = "Welcome ".ucfirst($user['name']);
+$title = "Welcome ".ucfirst($user['name'])."!";
 $css = "";
-$subtitle = "KittenCoin Wallet";
+$subtitle = "Your KittenCoin Wallet";
 require_once('src/title.php');
 check_errors();
 ?>
@@ -26,13 +26,12 @@ check_errors();
     <div class="small-2 columns"><p></p></div>
     <div class="small-8 columns panel">
         <div class="row">
-            <div class="twelve columns text-center"><h3>Your current balance is:</h3><h1><?php echo $user['total'] ?></h1> KittenCoins</div>
+            <div class="twelve columns text-center"><h3>Your current balance is</h3><h1><?php echo $user['total'] ?></h1> KittenCoins</div>
         </div>
         <div class="row welcome">
             <div class="twelve columns text-center">
                 <a href="/transfer.php" class="button success text-center">Transfer</a>
                 <a href="/lookup.php" class="button text-center">Lookup</a>
-                <a href="/edit.php" class="button text-center warning">Edit</a>
                 <?php if ($user['name']=='admin' || $user['admin'] == 1) {
                     echo "<a href='/admin/' class='button text-center'>Admin</a>";
                 } ?>
@@ -50,7 +49,7 @@ check_errors();
      ?>
     <div class="small-8 columns panel">
         <div class="row">
-            <div class="twelve columns text-center"><h3><strong>Your transaction history</strong></h3></div>
+            <div class="twelve columns text-center"><h3><strong>Transaction History</strong></h3></div>
         </div>
         <?php 
             
