@@ -27,9 +27,7 @@ CREATE TABLE transfers (
 );
 
 CREATE USER 'kittencoin'@'localhost' IDENTIFIED BY 'KittyPasswordy0';
-#CREATE USER 'kc-search'@'localhost' IDENTIFIED BY 'KittySearchPasswordy0';
 GRANT SELECT,INSERT,UPDATE on KittenCoin.* to 'kittencoin'@'localhost';
-#GRANT SELECT on KittenCoin.* to 'kc-search'@'localhost';
-FLUSH PRIVILEGES
+FLUSH PRIVILEGES;
 
 
