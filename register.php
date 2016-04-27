@@ -2,7 +2,7 @@
 require_once('src/header.html');
 $title = "Register for KittenCoin Wallet";
 $css = "alert-box info round";
-$subtitle = "Sign up today and get 50 free KittenCoins!";
+$subtitle = "Sign up today and get 10,000 free KittenCoins!";
 require_once('src/title.php');
 require_once('src/functions.php');
 check_errors();
