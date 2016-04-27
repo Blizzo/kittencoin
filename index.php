@@ -32,6 +32,7 @@ check_errors();
             <div class="twelve columns text-center">
                 <a href="/transfer.php" class="button success text-center">Transfer</a>
                 <a href="/lookup.php" class="button text-center">Lookup</a>
+				<a href="/store.php" class="button text-center">Store</a>
                 <?php if ($user['name']=='admin' || $user['admin'] == 1) {
                     echo "<a href='/admin/' class='button text-center'>Admin</a>";
                 } ?>
