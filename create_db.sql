@@ -6,8 +6,10 @@ CREATE TABLE users (
     name varchar(50) NOT NULL,
     password varchar(32) NOT NULL,
     admin INT NOT NULL DEFAULT 0,
-    total INT NOT NULL DEFAULT 50
+    total INT NOT NULL DEFAULT 10000,
+    limiter INT NOT NULL DEFAULT 0
 );
+
 CREATE TABLE transfers (
     id INT NOT NULL AUTO_INCREMENT,
     transfer_to INT NOT NULL,
@@ -25,6 +27,7 @@ CREATE TABLE transfers (
     FOREIGN KEY (transfer_from)
         REFERENCES users(id)
 );
+
 
 CREATE USER 'kittencoin'@'localhost' IDENTIFIED BY 'KittyPasswordy0';
 GRANT SELECT,INSERT,UPDATE on KittenCoin.* to 'kittencoin'@'localhost';
