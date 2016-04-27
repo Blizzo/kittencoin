@@ -23,3 +23,6 @@ ul
 {
     list-style-type: none;
 }
+div.store-item{
+	margin: 2em;
+}
