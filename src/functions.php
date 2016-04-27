@@ -153,7 +153,10 @@ function limiter($conn, $to, $from, $amount, $comment){
 			return True;
 		}
 
-
+		#no blue to blue
+		if ($to > 2 && $to < 11){
+			return False;	
+		}
 
 		#query for limiter
 		$statement = $conn->prepare("select limiter from users where id = ?");
