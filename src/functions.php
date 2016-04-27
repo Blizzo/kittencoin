@@ -139,6 +139,55 @@ function get_total($conn, $id){
     return $result;
 }
 
+function limiter($conn, $to, $from, $amount, $comment){
+	
+	#if xfer to admins, no limit
+	if ($to == 1 || $to == 2){
+		return False;
+	}
+
+	#if blue to red
+	if ($from > 2 && $from < 11){
+		#if amount is greater than 500, false
+		if ($amount > 500){
+			return True;
+		}
+
+
+
+		#query for limiter
+		$statement = $conn->prepare("select limiter from users where id = ?");
+		$statement->bind_param("i", $from);
+	    $statement->execute();      
+		$result = $statement->get_result();
+
+		$output = $result->fetch_all();
+		
+		$result = $output[0][0];
+
+		#if the limit+amount>500, false
+		$total = $amount+$result;
+		
+		if ($total > 500){
+			return True;
+		} else{
+			#updating limiter in database
+    		$statement = $conn->prepare("UPDATE users SET limiter=? WHERE id=?");
+    		$statement->bind_param("ii", $total, $from);
+    		$statement->execute();
+    		$query = $statement->get_result();
+		
+			#3-10 is blue, 11-14 is re
+			return False;
+		}
+	}
+
+	return False;
+}
+
+
+
+
 function transfer($conn, $to, $from, $amount, $comment){
 	//no XSS for the comment
 	$comment = htmlentities($comment);
@@ -248,3 +297,4 @@ function total_coins($conn){
     return $result[0];
 }
 
+?>
