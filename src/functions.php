@@ -155,7 +155,7 @@ function limiter($conn, $to, $from, $amount, $comment){
 
 		#no blue to blue
 		if ($to > 2 && $to < 11){
-			return False;	
+			return True;	
 		}
 
 		#query for limiter
